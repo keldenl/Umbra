@@ -46,8 +46,11 @@ class TaskDataSource : NSObject, UITableViewDataSource
 //        10:41:02.112                      --> HH:mm:ss.SSS
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "h:mm a"
-        cell.taskDueDate.text = dateFormatter.string(from: currData.dueDate)
+        let timeFormatter = DateFormatter()
+
+        dateFormatter.dateFormat = "E, MMM d"
+        timeFormatter.dateFormat = "h:mm a"
+        cell.taskDueDate.text = "\(dateFormatter.string(from: currData.dueDate)) at \(timeFormatter.string(from: currData.dueDate))"
         
         let doneImg = currData.done ? UIImage(named: "done") : UIImage(named: "undone")
         cell.taskDone.setImage(doneImg, for: [])

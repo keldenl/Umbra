@@ -9,6 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate {
+    var editingTaskId = -1
+    
     @IBOutlet weak var mainNavBar: UINavigationBar!
     @IBOutlet weak var mainTableView: UITableView!
     @IBOutlet weak var newTaskPicker: UIDatePicker!
@@ -19,13 +21,16 @@ class ViewController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var newTaskViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var newTaskTextfieldConstraint: NSLayoutConstraint!
     @IBOutlet weak var newTaskTextfieldTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var newTaskAddButton: UIButton!
     
+    // New Task Functions
     @IBAction func newTaskTriggered(_ sender: Any) {
         newTaskVisible(visible: true)
     }
     
     @IBAction func newTaskCancel(_ sender: Any) {
         newTaskVisible(visible: false)
+        newTaskPicker.date = Date()
     }
     
     func newTaskVisible(visible : Bool) {
@@ -33,7 +38,6 @@ class ViewController: UIViewController, UITableViewDelegate {
             self.newTaskTextfield.text = ""
             view.endEditing(true)
         }
-        
         let multiplier : CGFloat = visible ? 1 : -1
         
         navBarConstraint.constant -= 50 * multiplier
@@ -50,32 +54,24 @@ class ViewController: UIViewController, UITableViewDelegate {
     }
     
     @IBAction func createTask(_ sender: Any) {
-        self.tasks.append(Task(name:newTaskTextfield.text!, dueDate: Calendar.current.date(from: DateComponents(timeZone: TimeZone(abbreviation: "PST"), year: 2019, month: 2, day: 11, hour: 19, minute: 0, second: 0))!))
+        if (editingTaskId != -1) {
+            self.tasks[editingTaskId].name = newTaskTextfield.text!
+            self.tasks[editingTaskId].dueDate = newTaskPicker.date
+            editingTaskId = -1
+            newTaskPicker.date = Date()
+            newTaskAddButton.setTitle("Add task to list", for: [])
+        }
+        else {
+            self.tasks.append(Task(name:newTaskTextfield.text!, dueDate: newTaskPicker.date))
+        }
         self.reloadData()
         newTaskVisible(visible: false)
     }
-//    @IBAction func newTask(_ sender: Any) {
-////         Show placeholder alert for settings
-//        let alert = UIAlertController(title: "New Task", message: "", preferredStyle: .alert)
-//        // Add Text Field
-//        alert.addTextField { (textField) in textField.placeholder = "Task name" }
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
-//            self.tasks.append(Task(name: alert!.textFields![0].text!, dueDate: Calendar.current.date(from: DateComponents(timeZone: TimeZone(abbreviation: "PST"), year: 2019, month: 2, day: 11, hour: 19, minute: 0, second: 0))!))
-//            self.reloadData()
-//        }))
-//
-//        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in return }))
-//        self.present(alert, animated: true, completion: nil)
-//    }
     
     @IBAction func donePressed (_ sender : UIButton) {
         tasks[sender.tag].done = !tasks[sender.tag].done
         mainTableView.reloadData()
-        print(sender.tag)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { // Change `2.0` to the desired number of seconds.
-            // Code you want to be delayed
-            self.reloadData()
-        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { self.reloadData() }
     }
     
     var dataSource : TaskDataSource? = nil
@@ -85,6 +81,11 @@ class ViewController: UIViewController, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("User selected row at \(indexPath.row)")
+        editingTaskId = indexPath.row
+        newTaskTextfield.text = tasks[editingTaskId].name
+        newTaskPicker.date = tasks[editingTaskId].dueDate
+        newTaskAddButton.setTitle("Apply changes", for: [])
+        newTaskTextfield.becomeFirstResponder()
     }
     
     func hideDoneTasks(_ tasks : [Task]) -> ([Task], [Task]) {
@@ -111,11 +112,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        // Hiding Keyboard
-//        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
-//        tap.cancelsTouchesInView = false
-//        self.view.addGestureRecognizer(tap)
-        
+
         tasks = taskRepo.getTasks()
         dataSource = TaskDataSource(tasks)
         mainTableView.dataSource = dataSource
@@ -124,6 +121,7 @@ class ViewController: UIViewController, UITableViewDelegate {
         newTaskPicker.setValue(UIColor.white, forKeyPath: "textColor")
     }
     
+    // Status bar update
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()

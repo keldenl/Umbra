@@ -29,12 +29,12 @@
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Prr-QI-2Vz">
-                                <rect key="frame" x="0.0" y="120" width="375" height="692"/>
+                                <rect key="frame" x="0.0" y="120" width="375" height="547"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <color key="separatorColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="taskCell" id="k5G-le-Qhy" customClass="MainCell" customModule="Flow">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="taskCell" id="k5G-le-Qhy" customClass="MainCell" customModule="Flow">
                                         <rect key="frame" x="0.0" y="28" width="375" height="64"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="k5G-le-Qhy" id="mIf-fs-QSE">
@@ -89,7 +89,7 @@
                                 <rect key="frame" x="0.0" y="72" width="375" height="600"/>
                                 <subviews>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="nLl-iO-ct6">
-                                        <rect key="frame" x="8" y="46" width="359" height="216"/>
+                                        <rect key="frame" x="0.0" y="46" width="375" height="216"/>
                                         <date key="date" timeIntervalSinceReferenceDate="571889454.89268601">
                                             <!--2019-02-15 02:10:54 +0000-->
                                         </date>
@@ -130,12 +130,12 @@
                                 <constraints>
                                     <constraint firstItem="ebY-JX-ITg" firstAttribute="top" secondItem="nLl-iO-ct6" secondAttribute="bottom" constant="8" id="0fh-aT-cyV"/>
                                     <constraint firstAttribute="trailing" secondItem="ebY-JX-ITg" secondAttribute="trailing" constant="8" id="0wQ-nK-LZG"/>
-                                    <constraint firstAttribute="trailing" secondItem="nLl-iO-ct6" secondAttribute="trailing" constant="8" id="Afn-qf-OhS"/>
+                                    <constraint firstAttribute="trailing" secondItem="nLl-iO-ct6" secondAttribute="trailing" id="Afn-qf-OhS"/>
                                     <constraint firstItem="ebY-JX-ITg" firstAttribute="leading" secondItem="Ekm-dq-yTY" secondAttribute="leading" constant="8" id="Bvn-Cn-3JC"/>
                                     <constraint firstAttribute="trailing" secondItem="RG7-m7-CRk" secondAttribute="trailing" constant="14" id="Fut-PX-TPr"/>
                                     <constraint firstItem="RG7-m7-CRk" firstAttribute="top" secondItem="Ekm-dq-yTY" secondAttribute="top" constant="8" id="POy-rl-Q5E"/>
                                     <constraint firstItem="nLl-iO-ct6" firstAttribute="top" secondItem="RG7-m7-CRk" secondAttribute="bottom" constant="8" symbolic="YES" id="QLU-YL-bBt"/>
-                                    <constraint firstItem="nLl-iO-ct6" firstAttribute="leading" secondItem="Ekm-dq-yTY" secondAttribute="leading" constant="8" id="TDU-Up-6ty"/>
+                                    <constraint firstItem="nLl-iO-ct6" firstAttribute="leading" secondItem="Ekm-dq-yTY" secondAttribute="leading" id="TDU-Up-6ty"/>
                                 </constraints>
                             </view>
                             <textField autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New task" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NxE-SC-g6K">
@@ -154,7 +154,7 @@
                             <constraint firstItem="NxE-SC-g6K" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="60" id="01M-GR-1v6"/>
                             <constraint firstItem="7aj-gD-jVX" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="0Vn-is-eea"/>
                             <constraint firstItem="7aj-gD-jVX" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="0fO-ht-xMh"/>
-                            <constraint firstItem="Prr-QI-2Vz" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="145" id="0xE-LP-acR"/>
+                            <constraint firstItem="Prr-QI-2Vz" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="0xE-LP-acR"/>
                             <constraint firstItem="Ekm-dq-yTY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="4WM-Lt-woC"/>
                             <constraint firstAttribute="bottom" secondItem="Ekm-dq-yTY" secondAttribute="bottom" constant="-5" id="9v7-L2-k4h"/>
                             <constraint firstItem="7aj-gD-jVX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Kxc-r9-nEf"/>
@@ -172,6 +172,7 @@
                         <outlet property="mainNavBar" destination="7aj-gD-jVX" id="pWD-C8-j19"/>
                         <outlet property="mainTableView" destination="Prr-QI-2Vz" id="T2F-q8-9Q3"/>
                         <outlet property="navBarConstraint" destination="0fO-ht-xMh" id="9yx-Fm-C2P"/>
+                        <outlet property="newTaskAddButton" destination="ebY-JX-ITg" id="YDi-8G-Rob"/>
                         <outlet property="newTaskPicker" destination="nLl-iO-ct6" id="afT-Md-wiy"/>
                         <outlet property="newTaskTextfield" destination="NxE-SC-g6K" id="yYE-M9-73a"/>
                         <outlet property="newTaskTextfieldConstraint" destination="01M-GR-1v6" id="eHb-GL-F9W"/>
