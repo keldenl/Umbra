@@ -12,6 +12,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     var editingTaskId = -1
     
     @IBOutlet weak var mainNavBar: UINavigationBar!
+    @IBOutlet weak var mainNavText: UINavigationItem!
     @IBOutlet weak var mainTableView: UITableView!
     @IBOutlet weak var newTaskPicker: UIDatePicker!
     @IBOutlet weak var newTaskTextfield: UITextField!
@@ -35,15 +36,19 @@ class ViewController: UIViewController, UITableViewDelegate {
     
     func newTaskVisible(visible : Bool) {
         if (!visible) {
+            view.endEditing(true) // Remove focus
+            // Reset options
             self.newTaskTextfield.text = ""
-            view.endEditing(true)
+            newTaskAddButton.setTitle("Add task to list", for: [])
+            newTaskPicker.date = Date()
+
         }
         let multiplier : CGFloat = visible ? 1 : -1
         
         navBarConstraint.constant -= 50 * multiplier
         newTaskViewConstraint.constant -= 50 * multiplier
         newTaskTextfieldConstraint.constant -= 50 * multiplier
-        newTaskTextfieldTrailingConstraint.constant += 50 * multiplier
+        newTaskTextfieldTrailingConstraint.constant += 60 * multiplier
         
         UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseOut,
                        animations: {
@@ -58,8 +63,6 @@ class ViewController: UIViewController, UITableViewDelegate {
             self.tasks[editingTaskId].name = newTaskTextfield.text!
             self.tasks[editingTaskId].dueDate = newTaskPicker.date
             editingTaskId = -1
-            newTaskPicker.date = Date()
-            newTaskAddButton.setTitle("Add task to list", for: [])
         }
         else {
             self.tasks.append(Task(name:newTaskTextfield.text!, dueDate: newTaskPicker.date))
@@ -88,31 +91,33 @@ class ViewController: UIViewController, UITableViewDelegate {
         newTaskTextfield.becomeFirstResponder()
     }
     
-    func hideDoneTasks(_ tasks : [Task]) -> ([Task], [Task]) {
+    func updateTitle() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E, MMM d"
+        mainNavText.title = dateFormatter.string(from: Date())
+    }
+    
+    func hideDoneTasks(_ tasks : [Task]) -> [Task] {
         var returnTasks = [Task]()
-        var doneTasks = [Task]()
         for t in tasks {
             if (!t.done) { returnTasks.append(t) }
-            else { doneTasks.append(t) }
         }
         
-        return (returnTasks, doneTasks)
+        return returnTasks
     }
     
     func reloadData() {
-        var newDoneTasks : [Task] = []
-        (tasks, newDoneTasks) = hideDoneTasks(tasks)
-        doneTasks.append(contentsOf: newDoneTasks)
+        tasks = hideDoneTasks(tasks)
         dataSource = TaskDataSource(tasks)
         mainTableView.dataSource = dataSource
         mainTableView.reloadData()
-        print(doneTasks.count)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
+        updateTitle()
+        
         tasks = taskRepo.getTasks()
         dataSource = TaskDataSource(tasks)
         mainTableView.dataSource = dataSource

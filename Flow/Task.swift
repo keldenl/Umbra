@@ -44,7 +44,7 @@ class SimpleTaskRepository : TaskRepository {
     
     let localTestingData : [Task] = [
         Task(name: "Finish Math HW", dueDate: Calendar.current.date(from: DateComponents(timeZone: TimeZone(abbreviation: "PST"), year: 2019, month: 2, day: 11, hour: 19, minute: 0, second: 0))!, done: false),
-        Task(name: "Finish Scienec HW", dueDate: Calendar.current.date(from: DateComponents(timeZone: TimeZone(abbreviation: "PST"), year: 2019, month: 2, day: 11, hour: 23, minute: 0, second: 0))!, done: false),
+        Task(name: "Finish Science HW", dueDate: Calendar.current.date(from: DateComponents(timeZone: TimeZone(abbreviation: "PST"), year: 2019, month: 2, day: 11, hour: 23, minute: 0, second: 0))!, done: false),
         Task(name: "Finish English HW", dueDate: Calendar.current.date(from: DateComponents(timeZone: TimeZone(abbreviation: "PST"), year: 2019, month: 2, day: 11, hour: 20, minute: 0, second: 0))!, done: false)
     ]
     

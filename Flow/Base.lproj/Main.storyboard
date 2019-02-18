@@ -31,7 +31,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Prr-QI-2Vz">
                                 <rect key="frame" x="0.0" y="120" width="375" height="547"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <color key="separatorColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="separatorColor" red="0.21596884230892294" green="0.23138820366301788" blue="0.25113281249999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="taskCell" id="k5G-le-Qhy" customClass="MainCell" customModule="Flow">
@@ -83,6 +83,30 @@
                                             <outlet property="taskName" destination="J5Z-ZR-1lL" id="Nxv-fh-4ko"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="GJh-QF-NZt" userLabel="headerCell">
+                                        <rect key="frame" x="0.0" y="92" width="375" height="64"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GJh-QF-NZt" id="m6c-6D-zpU">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="63.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overdue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q6k-fp-hlI">
+                                                    <rect key="frame" x="23" y="18.5" width="301" height="27"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Q6k-fp-hlI" firstAttribute="leading" secondItem="m6c-6D-zpU" secondAttribute="leadingMargin" constant="8" id="kTb-JB-QfV"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Q6k-fp-hlI" secondAttribute="trailing" constant="36" id="yjt-0G-Gh8"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <constraints>
+                                            <constraint firstItem="Q6k-fp-hlI" firstAttribute="centerY" secondItem="GJh-QF-NZt" secondAttribute="centerY" id="w07-Cf-xXW"/>
+                                        </constraints>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ekm-dq-yTY" userLabel="newTaskView">
@@ -100,10 +124,10 @@
                                         </userDefinedRuntimeAttributes>
                                     </datePicker>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ebY-JX-ITg">
-                                        <rect key="frame" x="8" y="270" width="359" height="34"/>
-                                        <color key="backgroundColor" red="0.30324927260575657" green="0.6864548866421567" blue="0.1016770161381309" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <rect key="frame" x="8" y="270" width="359" height="36"/>
+                                        <color key="backgroundColor" red="0.97647058823529409" green="0.50980392156862742" blue="0.035294117647058823" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="ebY-JX-ITg" secondAttribute="height" multiplier="400:38" id="bS7-7Q-qpv"/>
+                                            <constraint firstAttribute="width" secondItem="ebY-JX-ITg" secondAttribute="height" multiplier="380:38" id="bS7-7Q-qpv"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                         <state key="normal" title="Add task to list">
@@ -120,7 +144,9 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RG7-m7-CRk">
                                         <rect key="frame" x="313" y="8" width="48" height="30"/>
-                                        <state key="normal" title="Cancel"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.97647058823529409" green="0.50980392156862742" blue="0.035294117647058823" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="newTaskCancel:" destination="BYZ-38-t0r" eventType="touchUpInside" id="omD-as-k62"/>
                                         </connections>
@@ -170,6 +196,7 @@
                     </view>
                     <connections>
                         <outlet property="mainNavBar" destination="7aj-gD-jVX" id="pWD-C8-j19"/>
+                        <outlet property="mainNavText" destination="7CO-xZ-M0K" id="8Zw-OZ-V4W"/>
                         <outlet property="mainTableView" destination="Prr-QI-2Vz" id="T2F-q8-9Q3"/>
                         <outlet property="navBarConstraint" destination="0fO-ht-xMh" id="9yx-Fm-C2P"/>
                         <outlet property="newTaskAddButton" destination="ebY-JX-ITg" id="YDi-8G-Rob"/>
