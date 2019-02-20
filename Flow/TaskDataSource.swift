@@ -11,32 +11,57 @@ import UIKit
 
 class TaskDataSource : NSObject, UITableViewDataSource
 {
-    var data : [Task] = []
-    init(_ elements : [Task]) {
+    var data : [[Task]]
+    init(_ elements : [[Task]]) {
         data = elements
     }
     
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        assert(section == 0)
-//        return "SWIPE DOWN TO ADD ITEM"
-//    }
-
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            self.data.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
+    // Section Header
+    let sectionHeaders : [String] = ["Overdue", "Today", "Tomorrow", "Upcoming"]
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sectionHeaders.count
     }
-
+//
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return sectionHeaders[section]
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count;
+//        var totalCount : Int = 0
+//        for g in data { totalCount += g.count }
+        return data[section].count
     }
+    
+    func returnCurrDataIndex(_ index : Int) -> Int {
+        if index < data[0].count { return 0 }
+        if index < (data[0].count + data[1].count) { return 1 }
+        if index < (data[0].count + data[1].count + data[2].count) { return 2 }
+        return 3
+    }
+    
+//    section 1 (3)
+//    0 new
+//    1 new
+    //2 new
+//    section 2 (1)
+//    3 (0) new
+    // 3 - ( 4 - 1 )
+    // 0 - (4-3)
+    // 4 - (3 - 3)
+    
+    // 3 - (3 - 2) = 2 this works
+    // 4 - (3 - 2) =
+    // ()
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell") as! MainCell
-        let currData = data[indexPath.row]
-
+        print("This is the data: \(data)")
+        let currGroup = data[indexPath.section]
+        print("Printing cell #\(indexPath.row)")
+        let currData = currGroup[indexPath.row]
+        
+        // [indexPath.row]
+        print(currData.name)
         cell.taskName.text = currData.name
         
 //        Date Formatter Information
@@ -61,8 +86,22 @@ class TaskDataSource : NSObject, UITableViewDataSource
         
         let doneImg = currData.done ? UIImage(named: "done") : UIImage(named: "undone")
         cell.taskDone.setImage(doneImg, for: [])
-        cell.taskDone.tag = indexPath.row
+        
+        var totalCountBefore : Int = 0
+        for i in 0..<indexPath.section {
+            totalCountBefore += data[i].count
+        }
+        cell.taskDone.tag = totalCountBefore + indexPath.row
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        var currData = data[returnCurrDataIndex(indexPath.row)]
+        if editingStyle == .delete {
+            currData.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+
 }
