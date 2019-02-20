@@ -45,10 +45,10 @@ class ViewController: UIViewController, UITableViewDelegate {
         }
         let multiplier : CGFloat = visible ? 1 : -1
         
-        navBarConstraint.constant -= 50 * multiplier
-        newTaskViewConstraint.constant -= 50 * multiplier
-        newTaskTextfieldConstraint.constant -= 50 * multiplier
-        newTaskTextfieldTrailingConstraint.constant += 60 * multiplier
+        navBarConstraint.constant -= 40 * multiplier
+        newTaskViewConstraint.constant -= 40 * multiplier
+        newTaskTextfieldConstraint.constant -= 40 * multiplier
+        newTaskTextfieldTrailingConstraint.constant += 55 * multiplier
         
         UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseOut,
                        animations: {
@@ -152,6 +152,8 @@ class ViewController: UIViewController, UITableViewDelegate {
     var fullTaskList : [Task] = []
     let sectionHeaders : [String] = ["Overdue", "Today", "Tomorrow", "Upcoming"]
 
+    
+    // TableView Editing & Header
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("User selected row at \(indexPath.row)")
         editingTaskId = (indexPath.section, indexPath.row)
@@ -164,9 +166,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = UIColor.black
-
-        let headerLabel = UILabel(frame: CGRect(x: 12, y: 0, width:
-            tableView.bounds.size.width, height: tableView.bounds.size.height))
+        let headerLabel = UILabel(frame: CGRect(x: 13, y: 8, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
         headerLabel.font = UIFont.systemFont(ofSize: 28.0, weight: UIFont.Weight.bold)
         headerLabel.textColor = UIColor.white
         headerLabel.text = sectionHeaders[section]
@@ -176,16 +176,16 @@ class ViewController: UIViewController, UITableViewDelegate {
         return headerView
     }
     
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 35
+        return 40
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         updateTitle()
+        newTaskTextfield.attributedPlaceholder = NSAttributedString(string: "New task",
+                                                               attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
         
         tasks = taskRepo.getTasks()
         fullTaskList = convertToOneArray(tasks)

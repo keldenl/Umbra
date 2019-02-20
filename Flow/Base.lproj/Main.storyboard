@@ -29,7 +29,7 @@
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="black" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Prr-QI-2Vz">
-                                <rect key="frame" x="0.0" y="120" width="375" height="547"/>
+                                <rect key="frame" x="0.0" y="110" width="375" height="557"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <color key="separatorColor" red="0.21596884230892294" green="0.23138820366301788" blue="0.25113281249999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -91,7 +91,7 @@
                                 </prototypes>
                             </tableView>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ekm-dq-yTY" userLabel="newTaskView">
-                                <rect key="frame" x="0.0" y="72" width="375" height="600"/>
+                                <rect key="frame" x="0.0" y="65" width="375" height="607"/>
                                 <subviews>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="nLl-iO-ct6">
                                         <rect key="frame" x="0.0" y="46" width="375" height="216"/>
@@ -126,7 +126,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RG7-m7-CRk">
                                         <rect key="frame" x="313" y="8" width="48" height="30"/>
                                         <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.97647058823529409" green="0.50980392156862742" blue="0.035294117647058823" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
                                             <action selector="newTaskCancel:" destination="BYZ-38-t0r" eventType="touchUpInside" id="omD-as-k62"/>
@@ -145,11 +145,15 @@
                                     <constraint firstItem="nLl-iO-ct6" firstAttribute="leading" secondItem="Ekm-dq-yTY" secondAttribute="leading" id="TDU-Up-6ty"/>
                                 </constraints>
                             </view>
-                            <textField autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New task" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NxE-SC-g6K">
-                                <rect key="frame" x="8" y="80" width="351" height="30"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <textField autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NxE-SC-g6K">
+                                <rect key="frame" x="8" y="70" width="351" height="35"/>
+                                <color key="backgroundColor" red="0.11879365810000009" green="0.11128010345914381" blue="0.11209496395697902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="cDg-Rf-QOb"/>
+                                </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
                                 <connections>
                                     <action selector="newTaskTriggered:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="ilE-m5-g6Y"/>
@@ -158,17 +162,17 @@
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                         <constraints>
-                            <constraint firstItem="NxE-SC-g6K" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="60" id="01M-GR-1v6"/>
+                            <constraint firstItem="NxE-SC-g6K" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="01M-GR-1v6"/>
                             <constraint firstItem="7aj-gD-jVX" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="0Vn-is-eea"/>
                             <constraint firstItem="7aj-gD-jVX" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="0fO-ht-xMh"/>
                             <constraint firstItem="Prr-QI-2Vz" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="0xE-LP-acR"/>
                             <constraint firstItem="Ekm-dq-yTY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="4WM-Lt-woC"/>
                             <constraint firstAttribute="bottom" secondItem="Ekm-dq-yTY" secondAttribute="bottom" constant="-5" id="9v7-L2-k4h"/>
                             <constraint firstItem="7aj-gD-jVX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Kxc-r9-nEf"/>
-                            <constraint firstItem="Ekm-dq-yTY" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="52" id="Uan-B6-t2i"/>
+                            <constraint firstItem="Ekm-dq-yTY" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="45" id="Uan-B6-t2i"/>
                             <constraint firstAttribute="trailing" secondItem="Ekm-dq-yTY" secondAttribute="trailing" id="b4w-IQ-q2P"/>
                             <constraint firstItem="NxE-SC-g6K" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="dBI-0T-EZI"/>
-                            <constraint firstItem="Prr-QI-2Vz" firstAttribute="top" secondItem="NxE-SC-g6K" secondAttribute="bottom" constant="10" id="fBN-th-82b"/>
+                            <constraint firstItem="Prr-QI-2Vz" firstAttribute="top" secondItem="NxE-SC-g6K" secondAttribute="bottom" constant="5" id="fBN-th-82b"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="NxE-SC-g6K" secondAttribute="trailing" constant="16" id="pdM-mO-u9u"/>
                             <constraint firstItem="Prr-QI-2Vz" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="rfo-A5-ITe"/>
                             <constraint firstItem="Prr-QI-2Vz" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ugJ-2E-Xrh"/>
