@@ -26,7 +26,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     
     // New Task Functions
     @IBAction func newTaskTriggered(_ sender: Any) {
-        newTaskVisible(visible: true)
+        if newTaskView.alpha == 0 { newTaskVisible(visible: true) }
     }
     
     @IBAction func newTaskCancel(_ sender: Any) {
@@ -41,8 +41,8 @@ class ViewController: UIViewController, UITableViewDelegate {
             self.newTaskTextfield.text = ""
             newTaskAddButton.setTitle("Add task to list", for: [])
             newTaskPicker.date = Date()
-
         }
+        
         let multiplier : CGFloat = visible ? 1 : -1
         
         navBarConstraint.constant -= 40 * multiplier
@@ -98,8 +98,8 @@ class ViewController: UIViewController, UITableViewDelegate {
             if dueDiff.day ?? 0 < 0 { overdue.append(t) }
             else {
                 switch t.dueDate {
-                case let d where Calendar.current.isDateInToday(d): today.append(t)
-                case let d where Calendar.current.isDateInTomorrow(d): tomorrow.append(t)
+                case let d where Calendar.current.isDateInToday(d!): today.append(t)
+                case let d where Calendar.current.isDateInTomorrow(d!): tomorrow.append(t)
                 default: other.append(t)
                 }
             }
@@ -115,6 +115,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     
     func reloadData() {
         tasks = hideDoneTasks(resortTasks(fullTaskList))
+        taskRepo.saveTasks(tasks)
         fullTaskList = convertToOneArray(tasks)
         dataSource = TaskDataSource(tasks)
         mainTableView.dataSource = dataSource
@@ -125,17 +126,25 @@ class ViewController: UIViewController, UITableViewDelegate {
     
     // Main interactions
     @IBAction func createTask(_ sender: Any) {
-        if (editingTaskId != (-1, -1)) {
-            self.tasks[editingTaskId.0][editingTaskId.1].name = newTaskTextfield.text!
-            self.tasks[editingTaskId.0][editingTaskId.1].dueDate = newTaskPicker.date
-            editingTaskId = (-1,-1)
+        if newTaskTextfield.text != nil && newTaskTextfield.text?.trimmingCharacters(in: .whitespaces) != "" {
+            if editingTaskId != (-1, -1) {
+                self.tasks[editingTaskId.0][editingTaskId.1].name = newTaskTextfield.text!
+                self.tasks[editingTaskId.0][editingTaskId.1].dueDate = newTaskPicker.date
+                editingTaskId = (-1,-1)
+            }
+            else {
+                self.fullTaskList.append(Task(name:newTaskTextfield.text!, dueDate: newTaskPicker.date))
+                print("added new task")
+            }
+            self.reloadData()
+            newTaskVisible(visible: false)
         }
+        // User left the space blank
         else {
-            self.fullTaskList.append(Task(name:newTaskTextfield.text!, dueDate: newTaskPicker.date))
-            print("added new task")
+            let alert = UIAlertController(title: "Empty Task Name", message: "Please enter a task name", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in return }))
+            self.present(alert, animated: true, completion: nil)
         }
-        self.reloadData()
-        newTaskVisible(visible: false)
     }
     
     @IBAction func donePressed (_ sender : UIButton) {
