@@ -17,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+//        NotificationCenter.default.addObserver(self, selector:"calendarDayDidChange:", name:NSNotification.Name.NSCalendarDayChanged, object:nil)
+
         return true
     }
     
@@ -45,4 +47,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var taskRepository : TaskRepository = CoreDataRepository.theInstance
 }
-

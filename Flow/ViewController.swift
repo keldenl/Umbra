@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate {
     var editingTaskId = (-1,-1)
+    var LOCK_EDITING = false
     
     @IBOutlet weak var mainNavBar: UINavigationBar!
     @IBOutlet weak var mainNavText: UINavigationItem!
@@ -147,10 +148,47 @@ class ViewController: UIViewController, UITableViewDelegate {
         }
     }
     
+    // Takes in "fullTaskList" index and returns "task" indexes
+    func getSectionRowIndex(_ fullIndex : Int) -> [Int] {
+        var taskSection : Int = 0
+        var rowIndex : Int = 0
+        
+        var currIndex : Int = 0
+        for i in 0..<self.tasks.count {
+            for k in 0..<self.tasks[i].count {
+                if k + currIndex == fullIndex {
+                    taskSection = i
+                    rowIndex = k
+                }
+            }
+            currIndex += self.tasks[i].count
+        }
+        
+        return [taskSection, rowIndex]
+    }
+    
+    
     @IBAction func donePressed (_ sender : UIButton) {
         fullTaskList[sender.tag].done = !fullTaskList[sender.tag].done
         mainTableView.reloadData()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { self.reloadData() }
+        self.LOCK_EDITING = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            let removeIndex = self.getSectionRowIndex(sender.tag)
+            let senderTag = self.tasks[removeIndex[0]].count > sender.tag ? sender.tag : sender.tag - 1 // Fixes edgecase completing last 2 tasks
+            if self.fullTaskList[senderTag].done {
+                self.fullTaskList.remove(at: senderTag)
+                self.tasks[removeIndex[0]].remove(at: removeIndex[1])
+                self.dataSource?.data[removeIndex[0]].remove(at: removeIndex[1])
+                self.taskRepo.saveTasks(self.tasks)
+                
+                self.mainTableView.deleteRows(at: [IndexPath(row: removeIndex[1], section: removeIndex[0])], with: .fade)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    self.mainTableView.reloadData()
+                    self.LOCK_EDITING = false
+                }
+            }
+           
+        }
     }
     
     
@@ -164,12 +202,13 @@ class ViewController: UIViewController, UITableViewDelegate {
     
     // TableView Editing & Header
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("User selected row at \(indexPath.row)")
-        editingTaskId = (indexPath.section, indexPath.row)
-        newTaskTextfield.text = tasks[editingTaskId.0][editingTaskId.1].name
-        newTaskPicker.date = tasks[editingTaskId.0][editingTaskId.1].dueDate
-        newTaskAddButton.setTitle("Apply changes", for: [])
-        newTaskTextfield.becomeFirstResponder()
+        if !LOCK_EDITING { // No editing when done pressed
+            editingTaskId = (indexPath.section, indexPath.row)
+            newTaskTextfield.text = tasks[editingTaskId.0][editingTaskId.1].name
+            newTaskPicker.date = tasks[editingTaskId.0][editingTaskId.1].dueDate
+            newTaskAddButton.setTitle("Apply changes", for: [])
+            newTaskTextfield.becomeFirstResponder()
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -188,6 +227,9 @@ class ViewController: UIViewController, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
+    
+    // Update the date
+//    func calendarDayDidChange(notification : NSNotification) { updateTitle() }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -214,4 +256,3 @@ class ViewController: UIViewController, UITableViewDelegate {
         return .lightContent
     }
 }
-
