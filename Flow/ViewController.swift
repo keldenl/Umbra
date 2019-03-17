@@ -37,6 +37,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     @IBAction func newTaskCancel(_ sender: Any) {
         newTaskVisible(visible: false)
         newTaskPicker.date = Date()
+        editingTaskId = (-1,-1)
     }
     
     func newTaskVisible(visible : Bool) {
@@ -173,27 +174,30 @@ class ViewController: UIViewController, UITableViewDelegate {
     
     
     @IBAction func donePressed (_ sender : UIButton) {
-        fullTaskList[sender.tag].done = !fullTaskList[sender.tag].done
-        mainTableView.reloadData()
-        self.LOCK_EDITING = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            let removeIndex = self.getSectionRowIndex(sender.tag)
-            let senderTag = self.tasks[removeIndex[0]].count > sender.tag ? sender.tag : sender.tag - 1 // Fixes edgecase completing last 2 tasks
-            if self.fullTaskList[senderTag].done {
-                self.fullTaskList.remove(at: senderTag)
-                self.tasks[removeIndex[0]].remove(at: removeIndex[1])
-                self.dataSource?.data[removeIndex[0]].remove(at: removeIndex[1])
-                self.taskRepo.saveTasks(self.tasks)
-                
-                self.mainTableView.deleteRows(at: [IndexPath(row: removeIndex[1], section: removeIndex[0])], with: .fade)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.mainTableView.reloadData()
+        if !self.LOCK_EDITING {
+            fullTaskList[sender.tag].done = !fullTaskList[sender.tag].done
+            mainTableView.reloadData()
+            self.LOCK_EDITING = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                let removeIndex = self.getSectionRowIndex(sender.tag)
+                let senderTag = self.tasks[removeIndex[0]].count > sender.tag ? sender.tag : sender.tag - 1 // Fixes edgecase completing last 2 tasks
+                if self.fullTaskList[senderTag].done {
+                    self.fullTaskList.remove(at: senderTag)
+                    self.tasks[removeIndex[0]].remove(at: removeIndex[1])
+                    self.dataSource?.data[removeIndex[0]].remove(at: removeIndex[1])
+                    self.taskRepo.saveTasks(self.tasks)
+                    
+                    self.mainTableView.deleteRows(at: [IndexPath(row: removeIndex[1], section: removeIndex[0])], with: .fade)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        self.mainTableView.reloadData()
+                        self.LOCK_EDITING = false
+                    }
+                } else {
                     self.LOCK_EDITING = false
                 }
-            } else {
-                self.LOCK_EDITING = false
             }
         }
+        
     }
     
     
