@@ -28,6 +28,10 @@ class ViewController: UIViewController, UITableViewDelegate {
     // New Task Functions
     @IBAction func newTaskTriggered(_ sender: Any) {
         if newTaskView.alpha == 0 { newTaskVisible(visible: true) }
+
+        // Send haptic feedback
+        let generator = UISelectionFeedbackGenerator()
+        generator.selectionChanged()
     }
     
     @IBAction func newTaskCancel(_ sender: Any) {
@@ -186,8 +190,9 @@ class ViewController: UIViewController, UITableViewDelegate {
                     self.mainTableView.reloadData()
                     self.LOCK_EDITING = false
                 }
+            } else {
+                self.LOCK_EDITING = false
             }
-           
         }
     }
     
