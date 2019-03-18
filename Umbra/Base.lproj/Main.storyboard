@@ -13,7 +13,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Flow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Umbra" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -25,7 +25,7 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem title="Flow" id="7CO-xZ-M0K"/>
+                                    <navigationItem title="Umbra" id="7CO-xZ-M0K"/>
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="black" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Prr-QI-2Vz">
@@ -39,7 +39,7 @@
                                     <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="taskCell" id="k5G-le-Qhy" customClass="MainCell" customModule="Flow">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="taskCell" id="k5G-le-Qhy" customClass="MainCell" customModule="Umbra">
                                         <rect key="frame" x="0.0" y="28" width="375" height="64"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="k5G-le-Qhy" id="mIf-fs-QSE">
@@ -60,11 +60,20 @@
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fmc-Np-1gR">
                                                     <rect key="frame" x="288" y="18" width="72" height="28"/>
+                                                    <color key="backgroundColor" red="0.14901960784313725" green="0.082352941176470587" blue="0.019607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="72" id="V4e-sV-GA1"/>
                                                         <constraint firstAttribute="height" constant="28" id="vc3-XR-INb"/>
                                                     </constraints>
-                                                    <state key="normal" image="done"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                    <state key="normal" title="DONE">
+                                                        <color key="titleColor" red="0.97647058823529409" green="0.50980392156862742" blue="0.035294117647058823" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="14"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <action selector="donePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5hn-pY-9Hl"/>
                                                     </connections>
@@ -198,7 +207,4 @@
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="done" width="144" height="56"/>
-    </resources>
 </document>

@@ -174,7 +174,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     
     
     @IBAction func donePressed (_ sender : UIButton) {
-        if !self.LOCK_EDITING {
+        if !self.LOCK_EDITING || fullTaskList[sender.tag].done {
             fullTaskList[sender.tag].done = !fullTaskList[sender.tag].done
             mainTableView.reloadData()
             self.LOCK_EDITING = true

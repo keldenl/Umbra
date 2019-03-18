@@ -43,8 +43,13 @@ class TaskDataSource : NSObject, UITableViewDataSource
         timeFormatter.dateFormat = "h:mm a"
         cell.taskDueDate.text = "\(dateFormatter.string(from: currData.dueDate)) at \(timeFormatter.string(from: currData.dueDate))"
         
-        let doneImg = currData.done ? UIImage(named: "done") : UIImage(named: "undone")
-        cell.taskDone.setImage(doneImg, for: [])
+        if !currData.done {
+            cell.taskDone.backgroundColor = #colorLiteral(red: 0.1490196078, green: 0.08235294118, blue: 0.01960784314, alpha: 1);
+            cell.taskDone.setTitleColor(#colorLiteral(red: 0.9764705882, green: 0.5098039216, blue: 0.03529411765, alpha: 1), for: .normal)
+        } else {
+            cell.taskDone.backgroundColor = #colorLiteral(red: 0.9764705882, green: 0.5098039216, blue: 0.03529411765, alpha: 1);
+            cell.taskDone.setTitleColor(.white, for: .normal)
+        }
         
         var totalCountBefore : Int = 0
         for i in 0..<indexPath.section {
