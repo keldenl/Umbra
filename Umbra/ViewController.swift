@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import UserNotifications
+import UserNotificationsUI
 
 class ViewController: UIViewController, UITableViewDelegate {
     var editingTaskId = (-1,-1)
@@ -140,6 +142,7 @@ class ViewController: UIViewController, UITableViewDelegate {
             }
             else {
                 self.fullTaskList.append(Task(name:newTaskTextfield.text!, dueDate: newTaskPicker.date))
+                setNotification(fullTaskList[fullTaskList.count-1], 12)
                 print("added new task")
             }
             self.reloadData()
@@ -198,6 +201,39 @@ class ViewController: UIViewController, UITableViewDelegate {
             }
         }
         
+    }
+    
+    // Send notification
+    func setNotification(_ task : Task, _ interval : Int) {
+        //Notification Content
+        let content = UNMutableNotificationContent()
+//        content.title = task.name
+        content.body = "\(task.name!) is due in 12 hours!"
+        content.categoryIdentifier = "TASK"
+        content.sound = UNNotificationSound.default
+        
+        //Notification Trigger - when the notification should be fired
+        let convertHrToSec : Double = 60 * 60 * -1
+        var convertedInterval = task.dueDate!.addingTimeInterval(convertHrToSec * Double(interval)).timeIntervalSinceNow // 43200 is 12 hours in seconds
+        print(interval)
+        if convertedInterval < 0 { // remind @ 1 hour if already passed 12 hours
+            convertedInterval = task.dueDate!.addingTimeInterval(convertHrToSec).timeIntervalSinceNow
+        }
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: convertedInterval, repeats: false)
+        
+        //Notification Request
+        let request = UNNotificationRequest(identifier: "Task", content: content, trigger: trigger)
+        
+        //Scheduling the Notification
+        let center = UNUserNotificationCenter.current()
+        center.add(request) { (error) in
+            if let error = error
+            {
+                print(error.localizedDescription)
+            }
+        }
+
+        print("set notificaiton")
     }
     
     
