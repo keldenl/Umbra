@@ -30,15 +30,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         //Actions
-        let remindHrAction = UNNotificationAction(identifier: "remindHr", title: "Remind 1 hour before", options: UNNotificationActionOptions(rawValue: 0))
-        let completeAction = UNNotificationAction(identifier: "complete", title: "Complete Task", options: .foreground)
+//        let remindHrAction = UNNotificationAction(identifier: "remindHr", title: "Remind 1 hour before", options: UNNotificationActionOptions(rawValue: 0))
+//        let completeAction = UNNotificationAction(identifier: "complete", title: "Complete Task", options: .foreground)
+        let gotoAction = UNNotificationAction(identifier: "goto", title: "View Task", options: .foreground)
         
         //Category
-        let taskCategory = UNNotificationCategory(identifier: "TASK", actions: [remindHrAction, completeAction], intentIdentifiers: [], options: UNNotificationCategoryOptions(rawValue: 0))
+        let taskCategory = UNNotificationCategory(identifier: "TASK", actions: [gotoAction], intentIdentifiers: [], options: UNNotificationCategoryOptions(rawValue: 0))
         
         //Register the app’s notification types and the custom actions that they support.
         center.setNotificationCategories([taskCategory])
-        center.delegate = self as! UNUserNotificationCenterDelegate
+//        center.delegate = self as! UNUserNotificationCenterDelegate
 
         return true
     }

@@ -44,7 +44,7 @@ class TaskDataSource : NSObject, UITableViewDataSource
         cell.taskDueDate.text = "\(dateFormatter.string(from: currData.dueDate)) at \(timeFormatter.string(from: currData.dueDate))"
         
         if !currData.done {
-            cell.taskDone.backgroundColor = #colorLiteral(red: 0.1490196078, green: 0.08235294118, blue: 0.01960784314, alpha: 1);
+            cell.taskDone.backgroundColor = #colorLiteral(red: 0.150000006, green: 0.150000006, blue: 0.150000006, alpha: 1);
             cell.taskDone.setTitleColor(#colorLiteral(red: 0.9764705882, green: 0.5098039216, blue: 0.03529411765, alpha: 1), for: .normal)
         } else {
             cell.taskDone.backgroundColor = #colorLiteral(red: 0.9764705882, green: 0.5098039216, blue: 0.03529411765, alpha: 1);
@@ -56,6 +56,9 @@ class TaskDataSource : NSObject, UITableViewDataSource
             totalCountBefore += data[i].count
         }
         cell.taskDone.tag = totalCountBefore + indexPath.row
+        
+        cell.layoutIfNeeded()
+
         
         return cell
     }

@@ -32,8 +32,6 @@
 		7DE107DD22129AFC00814702 /* TaskDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDataSource.swift; sourceTree = "<group>"; };
 		7DE107DF22129B6900814702 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		7DE107E122129E5500814702 /* MainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCell.swift; sourceTree = "<group>"; };
-		7DF05B9B223DDB02007FD939 /* Umbra.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Umbra.entitlements; sourceTree = "<group>"; };
-		7DF05B9C223DDB0D007FD939 /* Umbra.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Umbra.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +48,6 @@
 		7DE107BF2212992F00814702 = {
 			isa = PBXGroup;
 			children = (
-				7DF05B9B223DDB02007FD939 /* Umbra.entitlements */,
 				7DE107CA2212992F00814702 /* Umbra */,
 				7DE107C92212992F00814702 /* Products */,
 			);
@@ -67,7 +64,6 @@
 		7DE107CA2212992F00814702 /* Umbra */ = {
 			isa = PBXGroup;
 			children = (
-				7DF05B9C223DDB0D007FD939 /* Umbra.entitlements */,
 				7DE107CB2212992F00814702 /* AppDelegate.swift */,
 				7DC5763B22387DDE00674687 /* PersistenceService.swift */,
 				7DE107CD2212992F00814702 /* ViewController.swift */,
@@ -320,8 +316,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Umbra.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5PSCJVEKW3;
 				INFOPLIST_FILE = Umbra/Info.plist;
@@ -342,8 +339,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Umbra.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5PSCJVEKW3;
 				INFOPLIST_FILE = Umbra/Info.plist;

@@ -142,7 +142,7 @@ class ViewController: UIViewController, UITableViewDelegate {
             }
             else {
                 self.fullTaskList.append(Task(name:newTaskTextfield.text!, dueDate: newTaskPicker.date))
-                setNotification(fullTaskList[fullTaskList.count-1], 12)
+                setNotification(fullTaskList[fullTaskList.count-1], 1)
                 print("added new task")
             }
             self.reloadData()
@@ -199,41 +199,46 @@ class ViewController: UIViewController, UITableViewDelegate {
                     self.LOCK_EDITING = false
                 }
             }
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+
         }
         
     }
+    
+    func 
     
     // Send notification
     func setNotification(_ task : Task, _ interval : Int) {
         //Notification Content
         let content = UNMutableNotificationContent()
 //        content.title = task.name
-        content.body = "\(task.name!) is due in 12 hours!"
+        content.body = "\(task.name!) is due in 1 hour!"
         content.categoryIdentifier = "TASK"
         content.sound = UNNotificationSound.default
         
         //Notification Trigger - when the notification should be fired
         let convertHrToSec : Double = 60 * 60 * -1
-        var convertedInterval = task.dueDate!.addingTimeInterval(convertHrToSec * Double(interval)).timeIntervalSinceNow // 43200 is 12 hours in seconds
-        print(interval)
-        if convertedInterval < 0 { // remind @ 1 hour if already passed 12 hours
-            convertedInterval = task.dueDate!.addingTimeInterval(convertHrToSec).timeIntervalSinceNow
-        }
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: convertedInterval, repeats: false)
-        
-        //Notification Request
-        let request = UNNotificationRequest(identifier: "Task", content: content, trigger: trigger)
-        
-        //Scheduling the Notification
-        let center = UNUserNotificationCenter.current()
-        center.add(request) { (error) in
-            if let error = error
-            {
-                print(error.localizedDescription)
+        let convertedInterval = task.dueDate!.addingTimeInterval(convertHrToSec * Double(interval)).timeIntervalSinceNow // 43200 is 12 hours in seconds
+        print(convertedInterval)
+        if convertedInterval > 1 {
+            // remind @ 1 hour if already passed 12 hours
+//            convertedInterval = task.dueDate!.addingTimeInterval(convertHrToSec).timeIntervalSinceNow
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: convertedInterval, repeats: false)
+            
+            //Notification Request
+            let request = UNNotificationRequest(identifier: "Task", content: content, trigger: trigger)
+            
+            //Scheduling the Notification
+            let center = UNUserNotificationCenter.current()
+            center.add(request) { (error) in
+                if let error = error
+                {
+                    print(error.localizedDescription)
+                }
             }
+            print("set notificaiton")
         }
 
-        print("set notificaiton")
     }
     
     
@@ -242,7 +247,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     var taskRepo : TaskRepository = (UIApplication.shared.delegate as! AppDelegate).taskRepository
     var tasks : [[Task]] = [[]]
     var fullTaskList : [Task] = []
-    let sectionHeaders : [String] = ["Overdue", "Today", "Tomorrow", "Upcoming"]
+    let sectionHeaders : [String] = ["OVERDUE", "TODAY", "TOMORROW", "UPCOMING"]
 
     
     // TableView Editing & Header
@@ -259,9 +264,9 @@ class ViewController: UIViewController, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = UIColor.black
-        let headerLabel = UILabel(frame: CGRect(x: 13, y: 8, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
-        headerLabel.font = UIFont.systemFont(ofSize: 28.0, weight: UIFont.Weight.bold)
-        headerLabel.textColor = UIColor.white
+        let headerLabel = UILabel(frame: CGRect(x: 13, y: 17, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+        headerLabel.font = UIFont.systemFont(ofSize: 15.0, weight: UIFont.Weight.medium)
+        headerLabel.textColor = UIColor.lightGray
         headerLabel.text = sectionHeaders[section]
         headerLabel.sizeToFit()
         headerView.addSubview(headerLabel)
@@ -270,7 +275,9 @@ class ViewController: UIViewController, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
+        print(tasks[section].count)
+        if tasks[section].count == 0 { return 0.0 }
+        return 35
     }
     
     // Update the date
@@ -286,8 +293,12 @@ class ViewController: UIViewController, UITableViewDelegate {
         tasks = taskRepo.getTasks()
         fullTaskList = convertToOneArray(tasks)
         dataSource = TaskDataSource(tasks)
+        
+        mainTableView.estimatedRowHeight = 44.0
+        mainTableView.rowHeight = UITableView.automaticDimension
         mainTableView.dataSource = dataSource
         mainTableView.delegate = self
+        
         
         newTaskPicker.setValue(UIColor.white, forKeyPath: "textColor")
     }
