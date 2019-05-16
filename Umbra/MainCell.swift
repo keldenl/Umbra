@@ -12,13 +12,5 @@ import UIKit
 class MainCell: UITableViewCell {
     @IBOutlet weak var taskName: UILabel!
     @IBOutlet weak var taskDueDate: UILabel!
-    @IBOutlet weak var taskDone: UIButton!
-    
-//    
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        
-//        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 15))
-//    }
-    
+    @IBOutlet weak var taskDone: UIButton!    
 }

@@ -29,9 +29,7 @@ class TaskDataSource : NSObject, UITableViewDataSource
     // Table Cells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell") as! MainCell
-        print("This is the data: \(data)")
         let currGroup = data[indexPath.section]
-        print("Printing cell #\(indexPath.row)")
         let currData = currGroup[indexPath.row]
 
         cell.taskName.text = currData.name
@@ -55,8 +53,8 @@ class TaskDataSource : NSObject, UITableViewDataSource
         for i in 0..<indexPath.section {
             totalCountBefore += data[i].count
         }
-        cell.taskDone.tag = totalCountBefore + indexPath.row
         
+        cell.taskDone.tag = totalCountBefore + indexPath.row
         cell.layoutIfNeeded()
 
         

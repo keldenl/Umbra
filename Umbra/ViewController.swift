@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  iQuiz
+//  Umbra
 //
 //  Created by Kelden Lin on 2/11/19.
 //  Copyright © 2019 Kelden Lin. All rights reserved.
@@ -136,15 +136,16 @@ class ViewController: UIViewController, UITableViewDelegate {
     @IBAction func createTask(_ sender: Any) {
         if newTaskTextfield.text != nil && newTaskTextfield.text?.trimmingCharacters(in: .whitespaces) != "" {
             if editingTaskId != (-1, -1) {
-                self.tasks[editingTaskId.0][editingTaskId.1].name = newTaskTextfield.text!
-                self.tasks[editingTaskId.0][editingTaskId.1].dueDate = newTaskPicker.date
+                var index = 0
+                for i in 1...editingTaskId.0 { index += self.tasks[i-1].count }
+                index += editingTaskId.1
+                self.fullTaskList.remove(at: index)
                 editingTaskId = (-1,-1)
             }
-            else {
-                self.fullTaskList.append(Task(name:newTaskTextfield.text!, dueDate: newTaskPicker.date))
-                setNotification(fullTaskList[fullTaskList.count-1], 1)
-                print("added new task")
-            }
+            self.fullTaskList.append(Task(name:newTaskTextfield.text!, dueDate: newTaskPicker.date))
+            print("added new task")
+            self.updateNotifications()
+
             self.reloadData()
             newTaskVisible(visible: false)
         }
@@ -181,11 +182,11 @@ class ViewController: UIViewController, UITableViewDelegate {
             fullTaskList[sender.tag].done = !fullTaskList[sender.tag].done
             mainTableView.reloadData()
             self.LOCK_EDITING = true
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 let removeIndex = self.getSectionRowIndex(sender.tag)
-                let senderTag = self.tasks[removeIndex[0]].count > sender.tag ? sender.tag : sender.tag - 1 // Fixes edgecase completing last 2 tasks
-                if self.fullTaskList[senderTag].done {
-                    self.fullTaskList.remove(at: senderTag)
+                if self.fullTaskList[sender.tag].done {
+                    self.fullTaskList.remove(at: sender.tag)
                     self.tasks[removeIndex[0]].remove(at: removeIndex[1])
                     self.dataSource?.data[removeIndex[0]].remove(at: removeIndex[1])
                     self.taskRepo.saveTasks(self.tasks)
@@ -194,18 +195,28 @@ class ViewController: UIViewController, UITableViewDelegate {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         self.mainTableView.reloadData()
                         self.LOCK_EDITING = false
+                        
+                        self.updateNotifications() // update notifications if you completed a task
                     }
                 } else {
                     self.LOCK_EDITING = false
                 }
             }
-            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-
         }
         
     }
     
-    func 
+    func updateNotifications() {
+        self.resetScheduledNotifications()
+        for t in self.fullTaskList {
+            self.setNotification(t, 1)
+        }
+    }
+    
+    func resetScheduledNotifications() {
+        let center = UNUserNotificationCenter.current()
+        center.removeAllPendingNotificationRequests()
+    }
     
     // Send notification
     func setNotification(_ task : Task, _ interval : Int) {
@@ -220,7 +231,7 @@ class ViewController: UIViewController, UITableViewDelegate {
         let convertHrToSec : Double = 60 * 60 * -1
         let convertedInterval = task.dueDate!.addingTimeInterval(convertHrToSec * Double(interval)).timeIntervalSinceNow // 43200 is 12 hours in seconds
         print(convertedInterval)
-        if convertedInterval > 1 {
+        if convertedInterval > 0 {
             // remind @ 1 hour if already passed 12 hours
 //            convertedInterval = task.dueDate!.addingTimeInterval(convertHrToSec).timeIntervalSinceNow
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: convertedInterval, repeats: false)
@@ -236,7 +247,7 @@ class ViewController: UIViewController, UITableViewDelegate {
                     print(error.localizedDescription)
                 }
             }
-            print("set notificaiton")
+            print("Set notificaiton for: \(task.name!) @ \(convertedInterval)")
         }
 
     }
@@ -275,7 +286,6 @@ class ViewController: UIViewController, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        print(tasks[section].count)
         if tasks[section].count == 0 { return 0.0 }
         return 35
     }
