@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D69541D27EAE21600A11008 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D69541C27EAE21600A11008 /* Launch Screen.storyboard */; };
+		7D69541F27EAE25400A11008 /* IMG_7254-5.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D69541E27EAE25400A11008 /* IMG_7254-5.png */; };
 		7DC5763A22387D4700674687 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7DC5763822387D4700674687 /* DataModel.xcdatamodeld */; };
 		7DC5763C22387DDE00674687 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC5763B22387DDE00674687 /* PersistenceService.swift */; };
 		7DE107CC2212992F00814702 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE107CB2212992F00814702 /* AppDelegate.swift */; };
@@ -20,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7D69541C27EAE21600A11008 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		7D69541E27EAE25400A11008 /* IMG_7254-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IMG_7254-5.png"; sourceTree = "<group>"; };
 		7DC5763922387D4700674687 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		7DC5763B22387DDE00674687 /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		7DE107C82212992F00814702 /* Umbra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Umbra.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,7 +72,9 @@
 				7DC5763B22387DDE00674687 /* PersistenceService.swift */,
 				7DE107CD2212992F00814702 /* ViewController.swift */,
 				7DE107CF2212992F00814702 /* Main.storyboard */,
+				7D69541C27EAE21600A11008 /* Launch Screen.storyboard */,
 				7DE107D22212993100814702 /* Assets.xcassets */,
+				7D69541E27EAE25400A11008 /* IMG_7254-5.png */,
 				7DE107D42212993100814702 /* LaunchScreen.storyboard */,
 				7DE107D72212993100814702 /* Info.plist */,
 				7DE107DF22129B6900814702 /* Task.swift */,
@@ -152,7 +158,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				7DE107D62212993100814702 /* LaunchScreen.storyboard in Resources */,
+				7D69541F27EAE25400A11008 /* IMG_7254-5.png in Resources */,
 				7DE107D32212993100814702 /* Assets.xcassets in Resources */,
+				7D69541D27EAE21600A11008 /* Launch Screen.storyboard in Resources */,
 				7DE107D12212992F00814702 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

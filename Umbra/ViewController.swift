@@ -309,8 +309,17 @@ class ViewController: UIViewController, UITableViewDelegate {
         mainTableView.dataSource = dataSource
         mainTableView.delegate = self
         
-        
+        if #available(iOS 13.4, *) {
+            newTaskPicker.preferredDatePickerStyle = .wheels
+        } else {
+            // Fallback on earlier versions
+        }
         newTaskPicker.setValue(UIColor.white, forKeyPath: "textColor")
+        if #available(iOS 13.0, *) {
+            newTaskPicker.overrideUserInterfaceStyle = .dark
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     // Status bar update
